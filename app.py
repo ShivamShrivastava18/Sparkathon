@@ -24,7 +24,8 @@ def process_image():
     img = PIL.Image.open(image)
 
     prompt = """This image contains an image of a dish.
-    Given the image, based on what you see in the image, making sure to note all the ingredients required to make the dish. Return output in json format:
+    Given the image, based on what you see in the image, making sure to note all the ingredients required to make the dish. 
+    Also give ingredients for any subdish that is present in the picture. Return output in json format:
     {ingredients: [ingredients1, ingredients2, ingredients3, etc]}"""
 
     # Assuming you have a generative AI model configured
