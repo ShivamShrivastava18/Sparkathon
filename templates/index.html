@@ -1,0 +1,839 @@
+    <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Spark-a-Dish</title>
+      <style>
+          /* body, html {
+              margin: 0;
+              padding: 0;
+              height: 100%;
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              overflow: hidden;
+              
+          }
+  
+          .background {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              z-index: -1;
+              filter: brightness(0.6);
+              background-color: antiquewhite;
+          }
+  
+          .carousel {
+               width: 100%;
+               height: 33.33%;
+               overflow: hidden;
+               position: relative;
+           }
+   
+           .carousel-inner {
+               display: flex;
+               transition: transform 0.5s ease;
+           }
+   
+           .carousel-item {
+               flex: 0 0 auto;
+               width: 500px;
+               height: 300px;
+               padding: 10px;
+               box-sizing: border-box;
+           }
+   
+           .carousel-item img {
+               width: 100%;
+               height: 100%;
+               object-fit: cover;
+               border-radius: 15px;
+           }
+  
+          .chat-container {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              width: 40%;
+              background: rgba(0, 0, 0, 0.6);
+              backdrop-filter: blur(10px);
+              border-radius: 10px;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+              overflow: hidden;
+              display: flex;
+              flex-direction: column;
+              height: 600px;
+          }
+  
+          .chat-header {
+              background: #0071ce;
+              color: #fff;
+              padding: 15px;
+              text-align: center;
+              font-weight: bold;
+          }
+  
+          .chat-box {
+              flex: 1;
+              padding: 15px;
+              overflow-y: auto;
+              background: rgba(0, 0, 0, 0.3);
+              border-bottom: 1px solid #ddd;
+          }
+  
+          .chat-message {
+              margin: 10px 0;
+              display: flex;
+              align-items: flex-end;
+          }
+  
+          .chat-message.user {
+              justify-content: flex-end;
+          }
+  
+          .chat-bubble {
+              max-width: 70%;
+              padding: 10px 15px;
+              border-radius: 20px;
+              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+              position: relative;
+          }
+  
+          .chat-message.user .chat-bubble {
+              background: #ffc220;
+              color: #000;
+              border-bottom-right-radius: 0;
+          }
+  
+          .chat-message.bot .chat-bubble {
+              background: rgba(255, 255, 255, 0.1);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              color: #fff;
+              border-bottom-left-radius: 0;
+          }
+  
+          .chat-bubble img {
+              max-width: 100%;
+              border-radius: 10px;
+              margin-top: 10px;
+          }
+  
+          .chat-form {
+              display: flex;
+              padding: 10px;
+              background: rgba(0, 0, 0, 0.5);
+              align-items: center;
+              justify-content: center;
+              position: relative;
+          }
+  
+          #image-input {
+              display: none;
+          }
+  
+          .file-upload-label {
+              padding: 10px;
+              border: 1px solid #ddd;
+              border-radius: 20px;
+              font-size: 14px;
+              background: rgba(255, 255, 255, 0.1);
+              color: #fff;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-right: 10px;
+          }
+  
+          .file-upload-label::before {
+              content: "\1F4F7";
+              margin-right: 10px;
+              font-size: 18px;
+          }
+  
+          #send-button {
+              background-color: #0071ce;
+              color: #fff;
+              border: none;
+              padding: 10px 20px;
+              border-radius: 20px;
+              cursor: pointer;
+              font-weight: bold;
+              transition: background-color 0.3s ease;
+              margin-right: 10px;
+          }
+  
+          #send-button:hover {
+              background-color: #ffc220;
+              color: #000;
+          }
+  
+          #cart-button {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              background-color: #0071ce;
+              border: none;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              transition: background-color 0.3s ease;
+          }
+  
+          #cart-button:hover {
+              background-color: #ffc220;
+          }
+  
+          #cart-button img {
+              width: 24px;
+              height: 24px;
+          }
+  
+          .product-image {
+              max-width: 100px;
+              max-height: 100px;
+              margin-top: 10px;
+              border-radius: 10px;
+          }
+  
+          .chat-box::-webkit-scrollbar {
+              width: 8px;
+          }
+  
+          .chat-box::-webkit-scrollbar-thumb {
+              background-color: #0071ce;
+              border-radius: 10px;
+          }
+  
+          .chat-box::-webkit-scrollbar-track {
+              background-color: rgba(255, 255, 255, 0.1);
+          }
+  
+          .credits {
+              position: fixed;
+              bottom: 10px;
+              left: 50%;
+              transform: translateX(-50%);
+              color: #fff;
+              font-size: 12px;
+              text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+          }
+  
+          .headline {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            font-style: italic;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+  
+          .cart-section {
+              position: absolute;
+              top: 0;
+              right: -30%;
+              width: 30%;
+              height: 100%;
+              background: rgba(0, 0, 0, 0.8);
+              backdrop-filter: blur(10px);
+              transition: right 0.3s ease-in-out;
+              padding: 20px;
+              box-sizing: border-box;
+              color: #fff;
+              overflow-y: auto;
+          }
+  
+          .cart-section.open {
+              right: 0;
+          }
+  
+          .cart-section h2 {
+              margin-top: 0;
+              color: #ffc220;
+          }
+  
+          .cart-item {
+              margin-bottom: 10px;
+              padding-bottom: 10px;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+          }
+  
+          .cart-total {
+              font-weight: bold;
+              margin-top: 20px;
+          }
+  
+          .image-upload-prompt {
+              display: none;
+              color: #fff;
+              text-align: center;
+              margin-top: 10px;
+          } */
+          body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    filter: brightness(0.6);
+    background-color: antiquewhite;
+}
+
+.carousel {
+    width: 100%;
+    height: 33.33vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+    width: 50vw;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.chat-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+}
+
+.chat-header {
+    background: #0071ce;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.chat-box {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid #ddd;
+}
+
+.chat-message {
+    margin: 10px 0;
+    display: flex;
+    align-items: flex-end;
+}
+
+.chat-message.user {
+    justify-content: flex-end;
+}
+
+.chat-bubble {
+    max-width: 40%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-top: 10px;
+}
+
+.chat-message.user .chat-bubble {
+    background: #ffc220;
+    color: #000;
+    border-bottom-right-radius: 0;
+}
+
+.chat-message.bot .chat-bubble {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-bottom-left-radius: 0;
+}
+
+.chat-bubble img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.chat-form {
+    display: flex;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+#image-input {
+    display: none;
+}
+
+.file-upload-label {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.file-upload-label::before {
+    content: "\1F4F7";
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+#send-button {
+    background-color: #0071ce;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+#send-button:hover {
+    background-color: #ffc220;
+    color: #000;
+}
+
+#cart-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #0071ce;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+#cart-button:hover {
+    background-color: #ffc220;
+}
+
+#cart-button img {
+    width: 24px;
+    height: 24px;
+}
+
+.product-image {
+    max-width: 100px;
+    max-height: 100px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.chat-box::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.credits {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 12px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.headline {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.cart-section {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    transition: right 0.3s ease-in-out;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #fff;
+    overflow-y: auto;
+}
+
+.cart-section.open {
+    right: 0;
+}
+
+.cart-section h2 {
+    margin-top: 0;
+    color: #ffc220;
+}
+
+.cart-item {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cart-total {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.image-upload-prompt {
+    display: none;
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .chat-container {
+        width: 95%;
+        height: 90vh;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .carousel-item {
+        width: 100vw;
+    }
+
+    .headline {
+        font-size: 20px;
+    }
+
+    .chat-form {
+        flex-wrap: wrap;
+    }
+
+    .file-upload-label, #send-button {
+        padding: 8px;
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    #cart-button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .cart-section {
+        width: 100%;
+    }
+}
+
+@media (min-width: 769px) {
+    .cart-section {
+        width: 30%;
+        right: -30%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(10px);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1);
+    }
+}
+      </style>
+  </head>
+  <body>
+      <div class="background">
+          <div class="carousel">
+              <div class="carousel-inner">
+                  <div class="carousel-item"><img src="https://miro.medium.com/v2/resize:fit:1000/1*uTczphloiKYTA5mnr7gekQ.jpeg" alt="Fresh Fruits"></div>
+                  <div class="carousel-item"><img src="https://static.onecms.io/wp-content/uploads/sites/19/2005/06/13/mr20reshoot20sirloin-2000.jpg" alt="Grilled Steak"></div>
+                  <div class="carousel-item"><img src="https://savorylotus.com/wp-content/uploads/2017/03/Rainbow-Salad-with-Orange-Vinaigrette-www.savorylotus.com-.jpg" alt="Colorful Salad"></div>
+                  <div class="carousel-item"><img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2022/06/15/0/FNK_BEST_BAKED_MOSTACCIOLI_H_f_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1655312140172.jpeg" alt="Pasta Dish"></div>
+                  <div class="carousel-item"><img src="https://res.cloudinary.com/purnesh/image/upload/w_1080,f_auto/untitled-11641792604715.jpg" alt="Sushi Platter"></div>
+                  <div class="carousel-item"><img src="https://images.ctfassets.net/3s5io6mnxfqz/5rHDszmXO2kKZHFF2yIqva/e8801ea67aeef00f6f6dcaac2d531aae/AdobeStock_205724119.jpeg" alt="Fresh Bread"></div>
+                  <div class="carousel-item"><img src="https://insanelygoodrecipes.com/wp-content/uploads/2022/04/Sweet-Homemade-Ice-Cream-Sundae-Nachos-with-Whipped-Cream-and-Sprinkles.jpg" alt="Ice Cream Sundae"></div>
+                  <div class="carousel-item"><img src="https://www.sheknows.com/wp-content/uploads/2021/01/cheese-board-accessories.jpg?w=3000" alt="Cheese Board"></div>
+              </div>
+          </div>
+          <div class="carousel">
+              <div class="carousel-inner">
+                  <div class="carousel-item"><img src="https://assets.bonappetit.com/photos/5f809c81ba63e7584fca0576/master/pass/Double-Garlic-Roast-Chicken-With-Onion-Gravy.jpg" alt="Roast Chicken"></div>
+                  <div class="carousel-item"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_ZRkUfrveFnAgNkXzDdxYx0AYDOn_Gw4Jwg&s" alt="Vegetable Stir Fry"></div>
+                  <div class="carousel-item"><img src="https://jenkinsandsonfishandgame.co.uk/wp-content/uploads/2022/08/1117878c-7fde-4ff3-bea2-e08baf4f2713-scaled.jpg" alt="Seafood Platter"></div>
+                  <div class="carousel-item"><img src="https://www.foodrepublic.com/img/gallery/what-a-traditional-breakfast-looks-like-in-turkey/intro-1707732967.jpg" alt="Breakfast Spread"></div>
+                  <div class="carousel-item"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Pizza-3007395.jpg" alt="Pizza"></div>
+                  <div class="carousel-item"><img src="https://friendlysrestaurants.com/assets/live/img/production/detail/menu/lunch-dinner_999-combohs_all-american-burger-fries.jpg" alt="Burger and Fries"></div>
+                  <div class="carousel-item"><img src="https://pic.warmoven.in/catalog/product/cache/4e14bcb566d25893ae7201d4dbdc22fd/image/2287b12c/classic-belgian-chocolate-cake.jpg" alt="Chocolate Cake"></div>
+                  <div class="carousel-item"><img src="https://www.thereciperebel.com/wp-content/uploads/2022/04/how-to-make-a-smoothie-TRR-1200-32-of-34.jpg" alt="Fruit Smoothies"></div>
+                  <div class="carousel-item"><img src="https://www.thespruceeats.com/thmb/ereeBcFkDEbDT2VSlDe34sqXO_8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/chicken-tinga-tinga-de-pollo-4773239-Hero_01-1bd1d960c02a4fdb812323b8c60fd55b.jpg" alt="Tacos"></div>
+              </div>
+          </div>
+          <div class="carousel">
+              <div class="carousel-inner">
+                  <div class="carousel-item"><img src="https://www.thespruceeats.com/thmb/LOKqTFUPtB_zmHwJn4fv0s3ZfhE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-834739661-5ae9bcb8eb97de0039ea0434.jpg" alt="Grilled Vegetables"></div>
+                  <div class="carousel-item"><img src="https://www.sheknows.com/wp-content/uploads/2021/01/cheese-board-accessories.jpg?w=3000" alt="Charcuterie Board"></div>
+                  <div class="carousel-item"><img src="https://www.foodandwine.com/thmb/j1vJdgrMdu64ElBpxMzmvqpyt5U=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/creamy-tomato-soup-buttery-croutons-hero-02-49b419d00f854db78838a79c8df9a23f.jpg" alt="Soup"></div>
+                  <div class="carousel-item"><img src="https://cdn.media.amplience.net/i/japancentre/guide-page-sushi-79-maki-sushi/Maki-sushi-rolls?$poi$&w=700&h=410&sm=c&fmt=auto" alt="Sushi Rolls"></div>
+                  <div class="carousel-item"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqikYv6U_JGE9ycnN1MLqkPx6wiQs6bJopeQ&s" alt="Pancake Stack"></div>
+                  <div class="carousel-item"><img src="https://www.saveur.com/uploads/2019/09/26/16-220816-PAMU-PESCADO_EMBARAZADO-018-scaled.jpg?auto=webp" alt="Grilled Fish"></div>
+                  <div class="carousel-item"><img src="https://insanelygoodrecipes.com/wp-content/uploads/2022/10/Bowl-of-Fresh-Berries-Red-Currant-Blackberries-Raspberries-and-Blueberries.jpg" alt="Fresh Berries"></div>
+                  <div class="carousel-item"><img src="https://www.thedailymeal.com/img/gallery/the-unexpected-ice-cube-hack-for-gooier-cheese-pizza/l-intro-1676904465.jpg" alt="Cheese Pizza"></div>
+                  <div class="carousel-item"><img src="https://www.foodandwine.com/thmb/JMrJBrYh3fxDRgkV24_8dZH_zpQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/FAW-recipes-crispy-buttermilk-fried-chicken-hero-04-3a32f9a4a1984ecab79fb28e93d4bc00.jpg" alt="Fried Chicken"></div>
+                  <div class="carousel-item"><img src="https://www.foodnetwork.com/content/dam/images/food/fullset/2017/4/19/0/VB0512H_Mixed-Fruit-Tart_s4x3.jpg" alt="Fruit Tart"></div>
+              </div>
+          </div>
+      </div>
+  
+  
+
+  
+      <div class="chat-container">
+          <div class="chat-header">
+              Spark-a-Dish
+          </div>
+          <div id="chat-box" class="chat-box"></div>
+          <div class="image-upload-prompt">Image uploaded! Click 'Send' to process.</div>
+          <form id="chat-form" class="chat-form">
+              <label for="image-input" class="file-upload-label">Choose File</label>
+              <input type="file" id="image-input" accept="image/*" />
+              <button type="button" id="send-button">Send</button>
+              <button type="button" id="cart-button">
+                  <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2092%2092%22%3E%3Cpath%20fill%3D%22%23ffd024%22%20d%3D%22M91.8%2027.3%2081.1%2061c-.8%202.4-2.9%204-5.4%204H34.4c-2.4%200-4.7-1.5-5.5-3.7L13.1%2019H4c-2.2%200-4-1.8-4-4s1.8-4%204-4h11.9c1.7%200%203.2%201.1%203.8%202.7L36%2057h38l8.5-27H35.4c-2.2%200-4-1.8-4-4s1.8-4%204-4H88c1.3%200%202.5.7%203.2%201.7.8%201%201%202.4.6%203.6zm-55.4%2043c-1.7%200-3.4.7-4.6%201.9-1.2%201.2-1.9%202.9-1.9%204.6%200%201.7.7%203.4%201.9%204.6%201.2%201.2%202.9%201.9%204.6%201.9s3.4-.7%204.6-1.9c1.2-1.2%201.9-2.9%201.9-4.6%200-1.7-.7-3.4-1.9-4.6-1.2-1.2-2.9-1.9-4.6-1.9zm35.9%200c-1.7%200-3.4.7-4.6%201.9s-1.9%202.9-1.9%204.6c0%201.7.7%203.4%201.9%204.6%201.2%201.2%202.9%201.9%204.6%201.9%201.7%200%203.4-.7%204.6-1.9%201.2-1.2%201.9-2.9%201.9-4.6%200-1.7-.7-3.4-1.9-4.6s-2.9-1.9-4.6-1.9z%22%20class%3D%22color000000%20svgShape%22%2F%3E%3C%2Fsvg%3E" alt="Cart">
+              </button>
+          </form>
+      </div>
+  
+      <div class="cart-section">
+          <h2>Your Cart</h2>
+          <div id="cart-items"></div>
+          <div class="cart-total">Total: $<span id="cart-total">0.00</span></div>
+      </div>
+  
+      <div class="credits">Made by Paavas and Shivam</div>
+      <div class="headline" id="headline"></div>
+  
+      <script>
+        const headline = document.querySelector('.headline');
+        const sendButton = document.getElementById('send-button');
+        const imageInput = document.getElementById('image-input');
+        const chatBox = document.getElementById('chat-box');
+        const cartButton = document.getElementById('cart-button');
+        const cartSection = document.querySelector('.cart-section');
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const imageUploadPrompt = document.querySelector('.image-upload-prompt');
+
+        function resetCart() {
+            cartItems.innerHTML = '';
+            cartTotal.textContent = '0.00';
+        }
+
+        sendButton.addEventListener('click', () => {
+            if (imageInput.files.length > 0) {
+                const file = imageInput.files[0];
+                resetCart(); // Reset the cart
+                sendImage(file);
+                imageInput.value = '';
+                headline.style.display = 'none';
+                imageUploadPrompt.style.display = 'none';
+            } else {
+                displayMessage('Please select an image file.', 'user');
+            }
+        });
+
+        imageInput.addEventListener('change', () => {
+            if (imageInput.files.length > 0) {
+                imageUploadPrompt.style.display = 'block';
+            } else {
+                imageUploadPrompt.style.display = 'none';
+            }
+        });
+
+        cartButton.addEventListener('click', () => {
+            cartSection.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!cartSection.contains(event.target) && !cartButton.contains(event.target)) {
+                cartSection.classList.remove('open');
+            }
+        });
+
+        function displayMessage(message, type, isImage = false) {
+            const messageElement = document.createElement('div');
+            messageElement.className = `chat-message ${type}`;
+            const bubble = document.createElement('div');
+            bubble.className = 'chat-bubble';
+            if (isImage) {
+                const img = document.createElement('img');
+                img.src = message;
+                bubble.appendChild(img);
+            } else {
+                bubble.textContent = message;
+            }
+            messageElement.appendChild(bubble);
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function sendImage(file) {
+            const formData = new FormData();
+            formData.append('image', file);
+
+            fetch('/process_image', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    const eventSource = new EventSource('/stream_updates');
+                    eventSource.onmessage = function (event) {
+                        const data = JSON.parse(event.data);
+                        if (data.product) {
+                            displayMessage(`Product: ${data.product.product_name} - Price: ${data.product.product_price}`, 'bot');
+                            if (data.product.image_url) {
+                                displayMessage(data.product.image_url, 'bot', true);
+                            }
+                            addToCart(data.product.product_name, parseFloat(data.product.product_price.replace('$', '')));
+                        } else if (data.final) {
+                            displayMessage(data.final, 'bot');
+                            eventSource.close();
+                        } else if (data.error) {
+                            displayMessage('Error: ' + data.error, 'bot');
+                            eventSource.close();
+                        }
+                    };
+                } else {
+                    displayMessage('Error processing image', 'bot');
+                }
+            }).catch(error => {
+                displayMessage('Error: ' + error.message, 'bot');
+            });
+        }
+
+        function addToCart(item, price) {
+            const cartItem = document.createElement('div');
+            cartItem.className = 'cart-item';
+            cartItem.textContent = `${item} - $${price.toFixed(2)}`;
+            cartItems.appendChild(cartItem);
+            const currentTotal = parseFloat(cartTotal.textContent);
+            cartTotal.textContent = (currentTotal + price).toFixed(2);
+        }
+        let currentHeadlineChar = 0;
+            const headlineElement = document.getElementById('headline');
+            const headlineText = 'Welcome to Spark-a-Dish!';
+            const typingSpeed = 100;
+
+            function typeHeadline() {
+                if (currentHeadlineChar < headlineText.length) {
+                    headlineElement.textContent += headlineText.charAt(currentHeadlineChar);
+                    currentHeadlineChar++;
+                    setTimeout(typeHeadline, typingSpeed);
+                }
+            }
+
+            typeHeadline();
+
+       // Carousel animation
+      // Carousel animation
+const carousels = document.querySelectorAll('.carousel');
+carousels.forEach((carousel, index) => {
+    const inner = carousel.querySelector('.carousel-inner');
+    const items = inner.querySelectorAll('.carousel-item');
+    const itemWidth = items[0].offsetWidth;
+    
+    // Clone items for seamless looping
+    items.forEach(item => {
+        const clone = item.cloneNode(true);
+        inner.appendChild(clone);
+    });
+
+    const totalWidth = itemWidth * items.length;
+    inner.style.width = `${totalWidth * 2}px`;
+
+    let position = 0;
+    const speed = 0.5; // pixels per frame
+    const direction = index % 2 === 0 ? 1 : -1; // alternate direction
+
+    function animate() {
+        position += speed * direction;
+        if (position <= -totalWidth) {
+            position += totalWidth;
+        } else if (position > 0) {
+            position -= totalWidth;
+        }
+        inner.style.transform = `translateX(${position}px)`;
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+});
+
+         
+    </script>
+</body>
+</html>
+                
